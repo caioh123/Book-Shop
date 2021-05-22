@@ -18,6 +18,7 @@ const Header = () => {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [startIndex, setStartIndex] = useState(1);
+  const [cards, setCards] = useState([]);
 
   const handleSubmit = () => {
     setLoading(true);
@@ -33,10 +34,18 @@ const Header = () => {
             toast.error(
               `max results must be between 1 and ${response.data.totalItems}`
             );
+          } else {
+            if (response.data.items.length > 0) {
+              setCards(response.data.items);
+              setLoading(false);
+            }
           }
-          console.log(response.data);
+          console.log(cards);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          setLoading(true);
+          toast.error(`${err.response.data.error.message}`);
+        });
     }
   };
 

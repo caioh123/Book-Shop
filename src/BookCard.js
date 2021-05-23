@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardTitle,
@@ -24,6 +24,34 @@ const BookCard = ({
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
+  let favorites = JSON.parse(localStorage.getItem("books")) || [];
+
+  const handleFavorite = () => {
+    const source = {
+      thumbnail,
+      title,
+      pageCount,
+      language,
+      description,
+      authors,
+      publisher,
+      previewLink,
+      infoLink,
+    };
+
+    //removing if its on localstorage
+    const index = favorites.indexOf(source);
+    const existsInLocalStorage = index != -1;
+    if (index !== -1) {
+      favorites.splice(index, 1);
+    } else {
+      // saving on local storage
+      favorites.push(source);
+    }
+
+    localStorage.setItem("books", JSON.stringify(favorites));
+  };
+
   return (
     <Card style={{ width: "233px" }} className="m-auto ">
       <CardImg
@@ -44,9 +72,7 @@ const BookCard = ({
             size={20}
             color="red"
             style={{ cursor: "pointer", marginLeft: 15 }}
-            onClick={() => {
-              console.log("clicked");
-            }}
+            onClick={handleFavorite}
           />
         </CardSubtitle>
       </CardBody>

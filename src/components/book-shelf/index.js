@@ -5,7 +5,6 @@ import { Spinner } from "reactstrap";
 
 export const BookShelf = ({ books, showFavorite, loading }) => {
   const [favorites, setFavorites] = useState([]);
-  console.log(books);
 
   useEffect(() => {
     setFavorites(JSON.parse(localStorage.getItem("books")) || []);
@@ -17,7 +16,7 @@ export const BookShelf = ({ books, showFavorite, loading }) => {
 
   const booksToShow = books.map((book) => {
     if (
-      favorites.find((fav) => fav.volumeInfo.title == book.volumeInfo.title)
+      favorites.find((fav) => fav.volumeInfo.title === book.volumeInfo.title)
     ) {
       book["favorite"] = true;
     } else {
@@ -32,7 +31,6 @@ export const BookShelf = ({ books, showFavorite, loading }) => {
     const favoriteBook = favorites.find(
       (book) => favorite.volumeInfo.title === book.volumeInfo.title
     );
-    console.log(">>>>", favoriteBook);
 
     let newFavorite = [];
     if (favoriteBook) {
@@ -40,13 +38,10 @@ export const BookShelf = ({ books, showFavorite, loading }) => {
         (book) => book.volumeInfo.title !== favorite.volumeInfo.title
       );
       setFavorites(newFavorite);
-      console.log("removeu", favorites);
     } else {
       newFavorite = [...favorites, favorite];
       setFavorites(newFavorite);
-      console.log("Adicionou", [...favorites, favorite]);
     }
-    console.log(">>>>", favorite);
   };
 
   return loading ? (

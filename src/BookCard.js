@@ -9,48 +9,16 @@ import {
   CardSubtitle,
 } from "reactstrap";
 import { AiFillHeart } from "react-icons/ai";
-const BookCard = ({
-  thumbnail,
-  title,
-  pageCount,
-  language,
-  description,
-  authors,
-  publisher,
-  previewLink,
-  infoLink,
-}) => {
+const BookCard = ({ book, thumbnail, handleFavorite, favorite }) => {
   // States
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
-  let favorites = JSON.parse(localStorage.getItem("books")) || [];
+  const { title, pageCount, language, description, infoLink, previewLink } =
+    book.volumeInfo;
 
-  const handleFavorite = () => {
-    const source = {
-      thumbnail,
-      title,
-      pageCount,
-      language,
-      description,
-      authors,
-      publisher,
-      previewLink,
-      infoLink,
-    };
-
-    //removing if its on localstorage
-    const index = favorites.indexOf(source);
-    const existsInLocalStorage = index != -1;
-    if (index !== -1) {
-      favorites.splice(index, 1);
-    } else {
-      // saving on local storage
-      favorites.push(source);
-    }
-
-    localStorage.setItem("books", JSON.stringify(favorites));
-  };
+  const authors = book.volumeInfo.authors || "Indefinido";
+  const publisher = book.volumeInfo.publisher || "Indefinido";
 
   return (
     <Card style={{ width: "233px" }} className="m-auto ">
@@ -70,9 +38,9 @@ const BookCard = ({
           Adicionar aos favoritos
           <AiFillHeart
             size={20}
-            color="red"
+            color={favorite ? "red" : "#333"}
             style={{ cursor: "pointer", marginLeft: 15 }}
-            onClick={handleFavorite}
+            onClick={() => handleFavorite(book)}
           />
         </CardSubtitle>
       </CardBody>

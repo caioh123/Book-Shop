@@ -20,7 +20,7 @@ import Logo from "../assets/images/riachuelo.png";
 
 export const HomePage = () => {
   const [query, setQuery] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [cards, setCards] = useState([]);
   const [showFavorite, setShowFavorite] = useState(false);
 

@@ -52,7 +52,6 @@ export const BookShelf = ({ books, showFavorite, loading }) => {
     <div className="book-shelf">
       {showFavorite
         ? favorites.map((item, i) => {
-            console.log(">>>>> item", item);
             let thumbnail = "";
             if (item.volumeInfo.imageLinks) {
               thumbnail = item.volumeInfo.imageLinks.thumbnail;
